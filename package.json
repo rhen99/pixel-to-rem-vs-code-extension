@@ -10,21 +10,27 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:pixel-to-rem-converter.AskFeedback",
-    "onCommand:pixel-to-rem-converter.activeEditor"
+    "onCommand:pixel-to-rem-converter.setToRem"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "pixel-to-rem-converter.AskFeedback",
-        "title": "Ask Feedback",
+        "command": "pixel-to-rem-converter.setToRem",
+        "title": "Convert to Rem",
         "category": "Pixel To Rem"
-      },
+      }
+    ],
+    "configuration": [
       {
-        "command": "pixel-to-rem-converter.activeEditor",
-        "title": "Test Command",
-        "category": "Pixel To Rem"
+        "title": "PixelToRem",
+        "properties": {
+          "pixelToRem.pixelValue": {
+            "type": "number",
+            "default": 16,
+            "markdownDescription": "The value of one rem in pixels. **Warning**: This does not overwrite what you write in your css."
+          }
+        }
       }
     ]
   },

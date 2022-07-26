@@ -8,34 +8,41 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "pixel-to-rem-converter.AskFeedback",
-      async () => {
-        const answer = await vscode.window.showInformationMessage(
-          "How's Pixel To Rem?",
-          "Nice!",
-          "Trash!"
-        );
-        if (answer === "Trash!") {
-          vscode.window.showInformationMessage("We're sorry to hear that.");
-        }
-        if (answer === "Nice!") {
-          vscode.window.showInformationMessage("We're glad you liked it.");
-        }
+    vscode.commands.registerCommand("pixel-to-rem-converter.setToRem", () => {
+      const activeEditor = vscode.window.activeTextEditor;
+      if (!activeEditor) {
+        return;
       }
-    )
-  );
+      const selection = activeEditor.selection;
 
-  context.subscriptions.push(
-    vscode.commands.registerCommand(
-      "pixel-to-rem-converter.activeEditor",
-      () => {
-        const activeEditor = vscode.window.activeTextEditor;
-        if (!activeEditor) {
-          return;
-        }
+      if (selection.active.character === 0) {
+        vscode.window.showErrorMessage(
+          "Please select the value you want to change"
+        );
       }
-    )
+
+      const value = activeEditor.document.getText(selection);
+
+      const pixelRegex = /\d+px/g;
+
+      if (!pixelRegex.test(value)) {
+        vscode.window.showErrorMessage(
+          "Make sure you're selecting a value with a unit"
+        );
+        return;
+      }
+      const selectedNumber = value.replace(/px$/g, "");
+      const pixelValue = vscode.workspace
+        .getConfiguration("pixelToRem")
+        .get("pixelValue");
+
+      if (typeof pixelValue === "number") {
+        const convertedValue = parseInt(selectedNumber) / pixelValue + "rem";
+        activeEditor.edit((editBuilder) => {
+          editBuilder.replace(selection, convertedValue);
+        });
+      }
+    })
   );
 }
 
