@@ -21,6 +21,14 @@
         "category": "Pixel To Rem"
       }
     ],
+    "keybindings": [
+      {
+        "command": "pixel-to-rem-converter.setToRem",
+        "key": "ctrl+m",
+        "mac": "cmd+m",
+        "when": "editorHasSelection"
+      }
+    ],
     "configuration": [
       {
         "title": "PixelToRem",
