@@ -1,12 +1,19 @@
 {
   "name": "pixel-to-rem-converter",
+  "publisher": "LAGS",
   "displayName": "Pixel To Rem Converter",
-  "description": "Type a value using pixel and convert it to rem.",
-  "version": "0.0.1",
+  "description": "Convert your px values into rem values.",
+  "version": "1.0.0",
+  "icon": "icon.png",
+  "repository": {
+    "url": "https://github.com/rhen99/pixel-to-rem-vs-code-extension",
+    "type": "git"
+  },
   "engines": {
     "vscode": "^1.69.0"
   },
   "categories": [
+    "Formatters",
     "Other"
   ],
   "activationEvents": [
@@ -21,6 +28,14 @@
         "category": "Pixel To Rem"
       }
     ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "pixel-to-rem-converter.setToRem",
+          "when": "editorLangId == css"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "pixel-to-rem-converter.setToRem",
